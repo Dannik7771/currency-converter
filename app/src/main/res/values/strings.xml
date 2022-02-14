@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CurrencyConverter</string>
+    <string name="title">Конвертер валют</string>
+    <string name="convert_button">Конвертировать</string>
 </resources>
