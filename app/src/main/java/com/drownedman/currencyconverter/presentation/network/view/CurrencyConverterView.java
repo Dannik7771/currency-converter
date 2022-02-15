@@ -35,7 +35,7 @@ public class CurrencyConverterView extends Fragment implements TextWatcher, Adap
 
         viewModel = new ViewModelProvider(this).get(CurrencyConverterViewModel.class);
 
-        viewModel.getCurrencyCodes(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<List<CurrencyValue>>() {
+        viewModel.getCurrencyValues(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<List<CurrencyValue>>() {
             @Override
             public void onChanged(List<CurrencyValue> currencyValues) {
                 viewModel.updateCurrencyCodes(currencyValues);
@@ -57,7 +57,7 @@ public class CurrencyConverterView extends Fragment implements TextWatcher, Adap
         binding.updateCurrenciesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewModel.getCurrencyCodes(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<List<CurrencyValue>>() {
+                viewModel.getCurrencyValues(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<List<CurrencyValue>>() {
                     @Override
                     public void onChanged(List<CurrencyValue> currencyValues) {
                         viewModel.updateCurrencyCodes(currencyValues);

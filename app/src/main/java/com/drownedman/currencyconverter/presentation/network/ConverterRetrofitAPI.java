@@ -3,9 +3,12 @@ package com.drownedman.currencyconverter.presentation.network;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.drownedman.currencyconverter.domain.model.CurrencyValue;
+import com.drownedman.currencyconverter.presentation.repository.AppService;
 import com.drownedman.currencyconverter.presentation.repository.RepositoryTasks;
+import com.drownedman.currencyconverter.presentation.repository.dto.CurrencyValueDTO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,18 +72,25 @@ public class ConverterRetrofitAPI {
             public void onResponse(Call<CurrencyTransferBody> call, Response<CurrencyTransferBody> response) {
                 if (response.isSuccessful() && response.body() !=null) {
                     ArrayList<CurrencyValue> currencyTransferValues = new ArrayList();
-                    for (String code : response.body().conversion_rates.keySet())
+                    for (String code : response.body().conversion_rates.keySet()) {
                         currencyTransferValues.add(new CurrencyValue(code,
                                 response.body().conversion_rates.get(code)));
+
+                        //TODO: здесь сохраняем на локалке
+                        AppService.getInstance().getRepository().addCurrencyValue(new CurrencyValueDTO(code,
+                                response.body().conversion_rates.get(code)));
+                    }
                     currencyTransferValuesLiveData.setValue(currencyTransferValues);
-                    //TODO: здесь сохраняем на локалке
                 }
             }
 
             @Override
             public void onFailure(Call<CurrencyTransferBody> call, Throwable t) {
                 t.printStackTrace();
+
                 //TODO: здесь извлекаем из локалки
+                AppService.getInstance().getRepository().getAllCurrencyValues(owner)
+                        .observe(owner, currencyTransferValuesLiveData::setValue);
             }
         });
         return currencyTransferValuesLiveData;

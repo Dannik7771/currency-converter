@@ -22,13 +22,15 @@ public class CurrencyLocalRepository implements RepositoryTasks {
     }
 
     @Override
-    public void addCurrencyValue(CurrencyValue currencyValue) {
-        currencyValueDAO.addCurrencyValue((CurrencyValueDTO) currencyValue);
+    public <T extends CurrencyValue> void addCurrencyValue(T currencyValue) {
+        CurrencyLocalRoomDatabase.databaseWriteExecutor.execute(() -> {
+            currencyValueDAO.addCurrencyValue(((CurrencyValueDTO) currencyValue));
+        });
     }
 
     @Override
-    public LiveData<List<CurrencyValue>> getAllCurrencyValues(LifecycleOwner owner) {
-        MutableLiveData<List<CurrencyValue>> result = new MutableLiveData<>();
+    public MutableLiveData<List<CurrencyValueDTO>> getAllCurrencyValues(LifecycleOwner owner) {
+        MutableLiveData<List<CurrencyValueDTO>> result = new MutableLiveData<>();
         currencyValueDAO.getAllCurrencyValues().observe(owner, result::setValue);
         return result;
     }

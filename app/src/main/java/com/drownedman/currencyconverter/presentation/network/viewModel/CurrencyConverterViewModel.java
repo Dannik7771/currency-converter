@@ -13,7 +13,7 @@ import com.drownedman.currencyconverter.presentation.repository.AppService;
 import java.util.List;
 
 public class CurrencyConverterViewModel extends ViewModel {
-    public LiveData<List<CurrencyValue>> getCurrencyCodes(LifecycleOwner owner) {
+    public LiveData<List<CurrencyValue>> getCurrencyValues(LifecycleOwner owner) {
         return AppService.getInstance().getConverterApi().getAllCurrencyValues(owner);
     }
 
