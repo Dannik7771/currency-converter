@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/currencyConverterView"
-        android:name="com.drownedman.currencyconverter.presentation.network.view.CurrencyConverterView"
+        android:name="com.drownedman.currencyconverter.presentation.view.CurrencyConverterView"
         android:label="CurrencyConverterView" />
 </navigation>

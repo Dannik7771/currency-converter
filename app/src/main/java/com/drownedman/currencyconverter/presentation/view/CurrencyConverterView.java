@@ -1,4 +1,4 @@
-package com.drownedman.currencyconverter.presentation.network.view;
+package com.drownedman.currencyconverter.presentation.view;
 
 import android.os.Bundle;
 import android.text.Editable;
