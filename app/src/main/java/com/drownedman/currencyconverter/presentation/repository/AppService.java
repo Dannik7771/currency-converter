@@ -12,6 +12,8 @@ import com.drownedman.currencyconverter.presentation.network.ConverterRetrofitAP
 import com.drownedman.currencyconverter.presentation.repository.room.CurrencyLocalRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class AppService {
@@ -21,7 +23,13 @@ public class AppService {
 
     private ConverterRetrofitAPI converterApi;
 
+    private List<CurrencyValue> currencyValues;
     private List<String> codes;
+    private HashMap<String, Double> currencyValuesMap;
+
+    public AppService() {
+        currencyValuesMap = new HashMap<>();
+    }
 
     static public AppService getInstance() {
         if (service == null) {
@@ -48,12 +56,24 @@ public class AppService {
     }
 
     public void updateCodes(List<CurrencyValue> currencyValues) {
+        this.currencyValues = currencyValues;
         codes = new ArrayList<>();
-        for (CurrencyValue currencyValue : currencyValues)
+        for (CurrencyValue currencyValue : currencyValues) {
+            currencyValuesMap.put(currencyValue.getCode(), currencyValue.getValue());
             codes.add(currencyValue.getCode());
+        }
+        Collections.sort(codes);
     }
 
     public List<String> getCodes() {
         return codes;
+    }
+
+    public List<CurrencyValue> getCurrencyValues() {
+        return currencyValues;
+    }
+
+    public HashMap<String, Double> getCurrencyValuesMap() {
+        return currencyValuesMap;
     }
 }
