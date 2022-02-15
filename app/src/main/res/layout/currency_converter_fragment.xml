@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/first_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -23,34 +23,35 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/editTextNumber2"
+        android:id="@+id/second_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/first_value"
+        android:enabled="false"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/update_currencies_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/convert_button"
+        android:text="@string/update_currencies_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumber2" />
+        app:layout_constraintTop_toBottomOf="@+id/second_value" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/first_code"
         android:layout_width="120dp"
         android:layout_height="45dp"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber"
-        app:layout_constraintTop_toTopOf="@+id/editTextNumber" />
+        app:layout_constraintStart_toEndOf="@+id/first_value"
+        app:layout_constraintTop_toTopOf="@+id/first_value" />
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/second_code"
         android:layout_width="120dp"
         android:layout_height="45dp"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+        app:layout_constraintStart_toEndOf="@+id/second_value"
+        app:layout_constraintTop_toBottomOf="@+id/first_value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

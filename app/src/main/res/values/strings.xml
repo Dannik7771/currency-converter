@@ -2,4 +2,5 @@
     <string name="app_name">CurrencyConverter</string>
     <string name="title">Конвертер валют</string>
     <string name="convert_button">Конвертировать</string>
+    <string name="update_currencies_button">Обновить курс валют</string>
 </resources>

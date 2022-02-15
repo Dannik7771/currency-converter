@@ -1,36 +1,35 @@
 package com.drownedman.currencyconverter.presentation.repository.room;
 
-import android.content.Context;
+import android.app.Application;
 
-import androidx.room.Database;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import com.drownedman.currencyconverter.domain.model.CurrencyValue;
+import com.drownedman.currencyconverter.presentation.repository.RepositoryTasks;
+import com.drownedman.currencyconverter.presentation.repository.dao.CurrencyValueDAO;
+import com.drownedman.currencyconverter.presentation.repository.dto.CurrencyValueDTO;
 
-@Database(entities = {CarTitleDTO.class}, version = 1, exportSchema = false)
-public abstract class CurrencyLocalRepository extends RoomDatabase {
-    public abstract CarTitleDAO carTitleDAO();
-    public abstract CarPropertiesDAO carPropertiesDAO();
-    public abstract ClientDAO clientDAO();
+import java.util.List;
 
-    private static volatile CarRoomDatabase INSTANCE;
-    private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor =
-            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+public class CurrencyLocalRepository implements RepositoryTasks {
+    private CurrencyValueDAO currencyValueDAO;
 
-    static CarRoomDatabase getDatabase(final Context context) {
-        if (INSTANCE == null) {
-            synchronized (CarRoomDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            CarRoomDatabase.class, "cars_1") //db name
-                            .allowMainThreadQueries()
-                            .build();
-                }
-            }
-        }
-        return INSTANCE;
+    public CurrencyLocalRepository(Application app) {
+        CurrencyLocalRoomDatabase db = CurrencyLocalRoomDatabase.getDatabase(app);
+        currencyValueDAO = db.currencyValueDAO();
+    }
+
+    @Override
+    public void addCurrencyValue(CurrencyValue currencyValue) {
+        currencyValueDAO.addCurrencyValue((CurrencyValueDTO) currencyValue);
+    }
+
+    @Override
+    public LiveData<List<CurrencyValue>> getAllCurrencyValues(LifecycleOwner owner) {
+        MutableLiveData<List<CurrencyValue>> result = new MutableLiveData<>();
+        currencyValueDAO.getAllCurrencyValues().observe(owner, result::setValue);
+        return result;
     }
 }
